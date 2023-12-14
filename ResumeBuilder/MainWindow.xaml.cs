@@ -20,9 +20,32 @@ namespace ResumeBuilder
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        ElementDBHandler db = ElementDBHandler.Instance;
+        List<Element> element;
         public MainWindow()
         {
             InitializeComponent();
+            RefreshAllElementList();
+        }
+
+        public void RefreshAllElementList()
+        {
+            AllElementDataGrid.ItemsSource = null;
+            element = db.ReadAllElements();
+            AllElementDataGrid.ItemsSource = element;
+        }
+
+        private void AllElementDataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Element element = (Element)AllElementDataGrid.SelectedItem;
+            if (element != null)
+            {
+                ElementDetailsWindow elementDetailsWindow = new ElementDetailsWindow(element);
+                elementDetailsWindow.ShowDialog();
+                RefreshElmentList();
+            }
+
         }
     }
 }
