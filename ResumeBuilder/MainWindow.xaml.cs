@@ -76,5 +76,29 @@ namespace ResumeBuilder
                 windowToOpen?.ShowDialog(); // Show the window as a modal dialog
             }
         }
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            if (clickedButton != null)
+            {
+                if (clickedButton.Name == "NameEditButton")
+                {
+                    NameTextBox.IsReadOnly = false;
+                    NameTextBox.Focus();
+                }
+                else if (clickedButton.Name == "EmailEditButton")
+                {
+                    EmailTextBox.IsReadOnly = false;
+                    EmailTextBox.Focus();
+                }
+                else if (clickedButton.Name == "PhoneEditButton")
+                {
+                    PhoneTextBox.IsReadOnly = false;
+                    PhoneTextBox.Focus();
+                }
+
+            }
+        }
     }
 }
