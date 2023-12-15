@@ -212,5 +212,11 @@ namespace ResumeBuilder
                 }
             }
         }
+
+        private void ExportPDFButton_Click(object sender, RoutedEventArgs e)
+        {
+            DatabaseHandler dbHandler = DatabaseHandler.Instance;
+            ExportToPDF.exportToPDF(dbHandler);
+        }
     }
 }

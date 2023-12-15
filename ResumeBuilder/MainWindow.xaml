@@ -60,6 +60,7 @@
                 </DataGrid>
                 <Button x:Name="ContactInfoAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             </StackPanel>
+            <Button x:Name="ExportPDFButton" Content="Export to PDF" Click="ExportPDFButton_Click" />
         </StackPanel>
 
         
