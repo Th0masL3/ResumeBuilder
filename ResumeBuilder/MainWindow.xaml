@@ -33,33 +33,32 @@
 
         
         <StackPanel Margin="10">
-            <TextBlock Text="Work Experience" FontWeight="Bold"/>
-                <Button x:Name="WorkExperienceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
+                <TextBlock Text="Work Experience" FontWeight="Bold"/>
                 <DataGrid x:Name="WorkExperienceDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="WorkExperienceDataGrid_SelectionChanged">
                 </DataGrid>
+                <Button x:Name="WorkExperienceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             </StackPanel>
 
         
         <StackPanel Margin="10">
-            <TextBlock Text="Education" FontWeight="Bold"/>
-                <Button x:Name="EducationAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
+                <TextBlock Text="Education" FontWeight="Bold"/>
                 <DataGrid x:Name="EducationDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="EducationDataGrid_SelectionChanged">
-                   
                 </DataGrid>
+                <Button x:Name="EducationAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             </StackPanel>
 
             <StackPanel Margin="10">
-                <TextBlock Text="Referemces" FontWeight="Bold"/>
-                <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <TextBlock Text="References" FontWeight="Bold"/>
                 <DataGrid x:Name="ReferenceDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="ReferenceDataGrid_SelectionChanged">
                 </DataGrid>
+                <Button x:Name="ReferenceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             </StackPanel>
 
             <StackPanel Margin="10">
                 <TextBlock Text="Contact Information" FontWeight="Bold"/>
-                <Button x:Name="ContactInfoAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
                 <DataGrid x:Name="ContactInfoDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="ContactInfoDataGrid_SelectionChanged">
                 </DataGrid>
+                <Button x:Name="ContactInfoAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             </StackPanel>
         </StackPanel>
 
