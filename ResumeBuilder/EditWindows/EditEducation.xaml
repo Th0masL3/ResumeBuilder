@@ -6,7 +6,26 @@
         xmlns:local="clr-namespace:ResumeBuilder.EditWindows"
         mc:Ignorable="d"
         Title="EditEducation" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Certification" Width="120"/>
+            <TextBox x:Name="CertificationTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditCertification_Click" Name="CertificationEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="School Name" Width="120"/>
+            <TextBox x:Name="SchoolNameTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditSchoolName_Click" Name="SchoolNameEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Year Graduated" Width="120"/>
+            <TextBox x:Name="YearGraduatedTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditYearGraduated_Click" Name="YearGraduatedEditButton"/>
+        </StackPanel>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+        <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
+    </StackPanel>
 </Window>

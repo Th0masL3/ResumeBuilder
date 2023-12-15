@@ -6,7 +6,26 @@
         xmlns:local="clr-namespace:ResumeBuilder.EditWindows"
         mc:Ignorable="d"
         Title="EditWorkExperience" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Company Name" Width="120"/>
+            <TextBox x:Name="CompanyNameTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditCompanyName_Click" Name="CompanyNameEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Role" Width="120"/>
+            <TextBox x:Name="RoleTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditRole_Click" Name="RoleEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Years Worked" Width="120"/>
+            <TextBox x:Name="YearsWorkedTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditYearsWorked_Click" Name="YearsWorkedEditButton"/>
+        </StackPanel>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+        <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
+    </StackPanel>
 </Window>

@@ -6,7 +6,26 @@
         xmlns:local="clr-namespace:ResumeBuilder.EditWindows"
         mc:Ignorable="d"
         Title="EditReference" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Name" Width="120"/>
+            <TextBox x:Name="NameTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditName_Click" Name="NameEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Description" Width="120"/>
+            <TextBox x:Name="DescriptionTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditDescription_Click" Name="DescriptionEditButton"/>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal" Margin="5">
+            <TextBlock Text="Contact Info" Width="120"/>
+            <TextBox x:Name="ContactInfoTextBox" Width="200" IsReadOnly="True"/>
+            <Button Content="Edit" Margin="5" Click="EditContactInfo_Click" Name="ContactInfoEditButton"/>
+        </StackPanel>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+        <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
+    </StackPanel>
 </Window>
