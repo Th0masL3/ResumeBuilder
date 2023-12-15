@@ -19,16 +19,29 @@ namespace ResumeBuilder
     /// </summary>
     public partial class ElementDetails : Window
     {
-        Element element;
+        Element element2;
         public ElementDetails(Element element)
         {
             InitializeComponent();
-            this.element = element;
+            this.element2 = element;
 
             //display the user
-            CategoryNameTextBox.Text= element.CategoryName;
-            DescriptionTextBox.Text= element.Description;
-            DateTextBox.Text= element.Date;
+            CategoryNameTextBox.Text = element.CategoryName;
+            DescriptionTextBox.Text = element.Description;
+            DateTextBox.Text = element.Date;
         }
-}
+
+        private void EditButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            ElementDBHandler delete = ElementDBHandler.Instance;
+            delete.DeleteElement(element2);
+            Close();
+
+        }
+    }
 }

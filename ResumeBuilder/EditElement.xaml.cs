@@ -15,13 +15,30 @@ using System.Windows.Shapes;
 namespace ResumeBuilder
 {
     /// <summary>
-    /// Interaction logic for EditCategory.xaml
+    /// Interaction logic for EditElement.xaml
     /// </summary>
-    public partial class EditCategory : Window
+    public partial class EditElement : Window
     {
-        public EditCategory()
+        Element element2;
+        public EditElement(Element element)
         {
+            this.element2 = element;
             InitializeComponent();
+            CategoryNameTextBox.Text = element.CategoryName;
+            DescriptionTextBox.Text = element.Description;
+            DateTextBox.Text = element.Date;
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            element2.CategoryName = CategoryNameTextBox.Text;
+            element2.Description = DescriptionTextBox.Text;
+            element2.Date = DateTextBox.Text;
+       
+            ElementDBHandler db = ElementDBHandler.Instance;
+            db.EditElement(element2);
+            Close();
+
         }
     }
 }

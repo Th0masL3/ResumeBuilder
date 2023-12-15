@@ -138,7 +138,7 @@ namespace ResumeBuilder
             return element;
         }
 
-        public int UpdateElement(Element element)
+        public int EditElement(Element element)
 
         {
             int row = 0;
