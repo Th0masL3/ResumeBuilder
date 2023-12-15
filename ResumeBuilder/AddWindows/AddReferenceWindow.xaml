@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:ResumeBuilder.AddWindows"
         mc:Ignorable="d"
         Title="AddReferenceWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <TextBlock Text="Name" Margin="5"/>
+        <TextBox x:Name="NameTextBox" Margin="5"/>
+
+        <TextBlock Text="Description" Margin="5"/>
+        <TextBox x:Name="DescriptionTextBox" Margin="5"/>
+
+        <TextBlock Text="Contact Info" Margin="5"/>
+        <TextBox x:Name="ContactInfoTextBox" Margin="5"/>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+    </StackPanel>
 </Window>

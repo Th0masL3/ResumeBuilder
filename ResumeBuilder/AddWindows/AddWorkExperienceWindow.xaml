@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:ResumeBuilder.AddWindows"
         mc:Ignorable="d"
         Title="AddWorkExperienceWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <TextBlock Text="Company Name" Margin="5"/>
+        <TextBox x:Name="CompanyNameTextBox" Margin="5"/>
+
+        <TextBlock Text="Role" Margin="5"/>
+        <TextBox x:Name="RoleTextBox" Margin="5"/>
+
+        <TextBlock Text="Years Worked" Margin="5"/>
+        <TextBox x:Name="YearsWorkedTextBox" Margin="5"/>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+    </StackPanel>
 </Window>
