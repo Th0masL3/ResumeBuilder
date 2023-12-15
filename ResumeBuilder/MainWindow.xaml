@@ -5,8 +5,63 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ResumeBuilder"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Grid>
+        <StackPanel>
+        
+        <StackPanel Margin="10">
+            <TextBlock Text="Personal Information" FontWeight="Bold"/>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Name:" Width="80"/>
+                <TextBox x:Name="NameTextBox" Width="200"/>
+                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Email:" Width="80"/>
+                <TextBox x:Name="EmailTextBox" Width="200"/>
+                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <TextBlock Text="Phone:" Width="80"/>
+                <TextBox x:Name="PhoneTextBox" Width="200"/>
+                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
+            </StackPanel>
+        </StackPanel>
+
+        
+        <StackPanel Margin="10">
+            <TextBlock Text="Work Experience" FontWeight="Bold"/>
+            <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+            <ListBox x:Name="WorkExperienceListBox">
+                
+            </ListBox>
+        </StackPanel>
+
+        
+        <StackPanel Margin="10">
+            <TextBlock Text="Education" FontWeight="Bold"/>
+            <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+            <ListBox x:Name="EducationListBox">
+                
+            </ListBox>
+        </StackPanel>
+
+            <StackPanel Margin="10">
+                <TextBlock Text="Referemces" FontWeight="Bold"/>
+                <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <ListBox x:Name="ReferenceListBox">
+                    
+                </ListBox>
+            </StackPanel>
+
+            <StackPanel Margin="10">
+                <TextBlock Text="Contact Information" FontWeight="Bold"/>
+                <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <ListBox x:Name="ContactInfoListBox">
+                    
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
 
     </Grid>
 </Window>
