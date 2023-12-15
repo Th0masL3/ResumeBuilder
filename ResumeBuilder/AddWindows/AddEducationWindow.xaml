@@ -6,7 +6,16 @@
         xmlns:local="clr-namespace:ResumeBuilder.AddWindows"
         mc:Ignorable="d"
         Title="AddEducationWindow" Height="450" Width="800">
-    <Grid>
-        
-    </Grid>
+    <StackPanel Margin="10">
+        <TextBlock Text="Certification" Margin="5"/>
+        <TextBox x:Name="CertificationTextBox" Margin="5"/>
+
+        <TextBlock Text="School Name" Margin="5"/>
+        <TextBox x:Name="SchoolNameTextBox" Margin="5"/>
+
+        <TextBlock Text="Year Graduated" Margin="5"/>
+        <TextBox x:Name="YearGraduatedTextBox" Margin="5"/>
+
+        <Button Content="Submit" Margin="5" Click="SubmitButton_Click"/>
+    </StackPanel>
 </Window>
