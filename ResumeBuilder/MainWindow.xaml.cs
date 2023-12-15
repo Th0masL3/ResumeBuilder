@@ -42,9 +42,9 @@ namespace ResumeBuilder
             Element element = (Element)AllElementDataGrid.SelectedItem;
             if (element != null)
             {
-                ElementDetailsWindow elementDetailsWindow = new ElementDetailsWindow(element);
+                ElementDetails elementDetailsWindow = new ElementDetails(element);
                 elementDetailsWindow.ShowDialog();
-                RefreshElmentList();
+                RefreshAllElementList();
             }
 
         }

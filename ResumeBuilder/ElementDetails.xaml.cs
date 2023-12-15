@@ -15,13 +15,20 @@ using System.Windows.Shapes;
 namespace ResumeBuilder
 {
     /// <summary>
-    /// Interaction logic for CatedgoryDetails.xaml
+    /// Interaction logic for ElementDetails.xaml
     /// </summary>
-    public partial class CatedgoryDetails : Window
+    public partial class ElementDetails : Window
     {
-        public CatedgoryDetails()
+        Element element;
+        public ElementDetails(Element element)
         {
             InitializeComponent();
+            this.element = element;
+
+            //display the user
+            CategoryNameTextBox.Text= element.CategoryName;
+            DescriptionTextBox.Text= element.Description;
+            DateTextBox.Text= element.Date;
         }
-    }
+}
 }
