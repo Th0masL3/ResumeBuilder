@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
-        <DataGrid x:Name="AllElementDataGrid" SelectionChanged="AllDataGrid_SelectionChanged"/>
+        <DataGrid x:Name="AllElementDataGrid" SelectionChanged="AllElementDataGrid_SelectionChanged"/>
         <StackPanel>
         
         <StackPanel Margin="10">
