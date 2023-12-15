@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace ResumeBuilder.Models
 {
-    internal class Education
+    public class Education
     {
+        public int Id { get; set; }
+        public string Certification { get; set; }
+        public string SchoolName { get; set; }
+        public int YearGraduated { get; set; }
+
     }
 }

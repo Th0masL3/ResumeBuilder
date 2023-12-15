@@ -31,7 +31,7 @@
         
         <StackPanel Margin="10">
             <TextBlock Text="Work Experience" FontWeight="Bold"/>
-            <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <Button x:Name="WorkExperienceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             <ListBox x:Name="WorkExperienceListBox">
                 
             </ListBox>
@@ -40,7 +40,7 @@
         
         <StackPanel Margin="10">
             <TextBlock Text="Education" FontWeight="Bold"/>
-            <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <Button x:Name="EducationAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
             <ListBox x:Name="EducationListBox">
                 
             </ListBox>
@@ -48,7 +48,7 @@
 
             <StackPanel Margin="10">
                 <TextBlock Text="Referemces" FontWeight="Bold"/>
-                <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <Button x:Name="ReferenceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
                 <ListBox x:Name="ReferenceListBox">
                     
                 </ListBox>
@@ -56,7 +56,7 @@
 
             <StackPanel Margin="10">
                 <TextBlock Text="Contact Information" FontWeight="Bold"/>
-                <Button Content="Add" Margin="5" Click="AddButton_Click"/>
+                <Button x:Name="ContactInfoAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
                 <ListBox x:Name="ContactInfoListBox">
                     
                 </ListBox>

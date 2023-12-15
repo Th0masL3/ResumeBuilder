@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ResumeBuilder.Models
 {
-    internal class PersonnalInfo
+    public class PersonnalInfo
     {
         public int Id { get; set; }
         public string Name { get; set; }

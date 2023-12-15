@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace ResumeBuilder.Models
 {
-    internal class ContactInfo
+    public class ContactInfo
     {
-
+        public int Id { get; set; }
+        public string Description { get; set; }
+        public string Telephone { get; set; }
+        public string Adress { get; set; }
     }
 }

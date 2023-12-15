@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ResumeBuilder.AddWindows;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -46,6 +47,34 @@ namespace ResumeBuilder
                 RefreshElmentList();
             }
 
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button clickedButton = sender as Button;
+            if (clickedButton != null)
+            {
+                Window windowToOpen = null;
+
+                if (clickedButton.Name == "WorkExperienceAddButton")
+                {
+                    windowToOpen = new AddWorkExperienceWindow();
+                }
+                else if (clickedButton.Name == "EducationAddButton")
+                {
+                    windowToOpen = new AddEducationWindow();
+                }
+                else if (clickedButton.Name == "ReferenceAddButton")
+                {
+                    windowToOpen = new AddReferenceWindow();
+                }
+                else if (clickedButton.Name == "ContactInfoAddButton")
+                {
+                    windowToOpen = new AddContactInfoWindow();
+                }
+
+                windowToOpen?.ShowDialog(); // Show the window as a modal dialog
+            }
         }
     }
 }
