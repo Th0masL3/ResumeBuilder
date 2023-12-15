@@ -11,17 +11,41 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using ResumeBuilder.Models;
 
 namespace ResumeBuilder.AddWindows
 {
-    /// <summary>
-    /// Interaction logic for AddReferenceWindow.xaml
-    /// </summary>
     public partial class AddReferenceWindow : Window
     {
+        private DatabaseHandler db = DatabaseHandler.Instance;
+
         public AddReferenceWindow()
         {
             InitializeComponent();
+        }
+
+        private void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+            Reference newReference = new Reference
+            {
+                Name = NameTextBox.Text,
+                Description = DescriptionTextBox.Text,
+                ContactInfo = ContactInfoTextBox.Text
+            };
+
+            
+            int result = db.AddReference(newReference);
+
+            if (result > 0) 
+            {
+                MessageBox.Show("Reference added successfully.");
+                this.DialogResult = true;
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Error adding reference.");
+            }
         }
     }
 }

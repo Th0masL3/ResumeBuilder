@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="800">
     <Grid>
-        <DataGrid x:Name="AllElementDataGrid" SelectionChanged="AllElementDataGrid_SelectionChanged"/>
         <StackPanel>
         
         <StackPanel Margin="10">
@@ -16,51 +15,51 @@
                 <TextBlock Text="Name:" Width="80"/>
                     <TextBox x:Name="NameTextBox" Width="200" IsReadOnly="True"/>
                     <Button x:Name="NameEditButton" Content="Edit" Margin="5" Click="EditButton_Click"/>
-            </StackPanel>
+                    <Button x:Name="NameSaveButton" Content="Save" Margin="5" Click="SaveButton_Click" Visibility="Collapsed"/>
+                </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Email:" Width="80"/>
                     <TextBox x:Name="EmailTextBox" Width="200" IsReadOnly="True"/>
                     <Button x:Name="EmailEditButton" Content="Edit" Margin="5" Click="EditButton_Click"/>
-            </StackPanel>
+                    <Button x:Name="EmailSaveButton" Content="Save" Margin="5" Click="SaveButton_Click" Visibility="Collapsed"/>
+                </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="5">
                 <TextBlock Text="Phone:" Width="80"/>
                     <TextBox x:Name="PhoneTextBox" Width="200" IsReadOnly="True"/>
                     <Button x:Name="PhoneEditButton" Content="Edit" Margin="5" Click="EditButton_Click"/>
-            </StackPanel>
+                    <Button x:Name="PhoneSaveButton" Content="Save" Margin="5" Click="SaveButton_Click" Visibility="Collapsed"/>
+                </StackPanel>
         </StackPanel>
 
         
         <StackPanel Margin="10">
             <TextBlock Text="Work Experience" FontWeight="Bold"/>
                 <Button x:Name="WorkExperienceAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
-            <ListBox x:Name="WorkExperienceListBox">
-                
-            </ListBox>
-        </StackPanel>
+                <DataGrid x:Name="WorkExperienceDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="WorkExperienceDataGrid_SelectionChanged">
+                </DataGrid>
+            </StackPanel>
 
         
         <StackPanel Margin="10">
             <TextBlock Text="Education" FontWeight="Bold"/>
                 <Button x:Name="EducationAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
-            <ListBox x:Name="EducationListBox">
-                
-            </ListBox>
-        </StackPanel>
+                <DataGrid x:Name="EducationDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="EducationDataGrid_SelectionChanged">
+                   
+                </DataGrid>
+            </StackPanel>
 
             <StackPanel Margin="10">
                 <TextBlock Text="Referemces" FontWeight="Bold"/>
                 <Button Content="Add" Margin="5" Click="AddButton_Click"/>
-                <ListBox x:Name="ReferenceListBox">
-                    
-                </ListBox>
+                <DataGrid x:Name="ReferenceDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="ReferenceDataGrid_SelectionChanged">
+                </DataGrid>
             </StackPanel>
 
             <StackPanel Margin="10">
                 <TextBlock Text="Contact Information" FontWeight="Bold"/>
                 <Button x:Name="ContactInfoAddButton" Content="Add" Margin="5" Click="AddButton_Click"/>
-                <ListBox x:Name="ContactInfoListBox">
-                    
-                </ListBox>
+                <DataGrid x:Name="ContactInfoDataGrid" AutoGenerateColumns="True" SelectionMode="Single" SelectionChanged="ContactInfoDataGrid_SelectionChanged">
+                </DataGrid>
             </StackPanel>
         </StackPanel>
 

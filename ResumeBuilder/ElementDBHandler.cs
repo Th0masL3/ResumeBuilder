@@ -5,221 +5,470 @@ using System.Data.SQLite;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ResumeBuilder.Models;
 
 namespace ResumeBuilder
 {
-    public sealed class ElementDBHandler
+    public sealed class DatabaseHandler
     {
+        private static readonly string conString = ConfigurationManager.ConnectionStrings["MyDB"].ConnectionString;
+        private static readonly DatabaseHandler instance = new DatabaseHandler();
 
-        static readonly string conString = ConfigurationManager.ConnectionStrings["MyDB"].ConnectionString;
-        static readonly ElementDBHandler instance = new ElementDBHandler();
-
-
-
-        private ElementDBHandler()
+        private DatabaseHandler()
         {
-            CreateTable();
-
-            Element newE1 = new Element
-            {
-                CategoryName = "Things ",
-                Description = "Bellingham",
-                Date = "2 april"
-            };
-            Element newE2 = new Element
-            {
-                CategoryName = "Quoi",
-                Description = "Pourquoi",
-                Date = "2 june"
-            };
-
-
-            Element newE3 = new Element
-            {
-                CategoryName = "HOO",
-                Description = "RAYY",
-                Date = "2 july"
-            };
-
-            AddElement(newE1);
-            AddElement(newE2);
-            AddElement(newE3);
-
+            CreatePersonalInfoTable();
+            CreateContactInfoTable();
+            CreateEducationTable();
+            CreateReferenceTable();
+            CreateWorkExperienceTable();
         }
 
-        public static ElementDBHandler Instance
+        public static DatabaseHandler Instance
         {
             get { return instance; }
         }
 
-        public void CreateTable()
+        private void CreatePersonalInfoTable()
         {
-            using (SQLiteConnection con = new SQLiteConnection(conString))
+            using (var con = new SQLiteConnection(conString))
             {
                 con.Open();
-                string drop = "drop table if exists ELEMENTS;";
-                SQLiteCommand command1 = new SQLiteCommand(drop, con);
-                command1.ExecuteNonQuery();
-
-                string table = "Create table ELEMENTS (ID integer primary key," +
-                    "CategoryName text, " +
-                    "Description text, Date text);";
-
-
-                SQLiteCommand command2 = new SQLiteCommand(table, con);
-                command2.ExecuteNonQuery();
-
-
-
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = @"
+                    CREATE TABLE IF NOT EXISTS PersonalInfo (
+                        Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                        Name TEXT, 
+                        Email TEXT, 
+                        Phone TEXT
+                    )";
+                cmd.ExecuteNonQuery();
             }
         }
 
-        public int AddElement(Element element)
+        public void AddEmptyPersonalInfo()
         {
-            int rows = 0;
-            int newId = 0;
-            using (SQLiteConnection con = new SQLiteConnection(conString))
+            using (var con = new SQLiteConnection(conString))
             {
                 con.Open();
-                //create a parameterized query
-                string query = "INSERT INTO ELEMENTS (CategoryName, Description, Date) VALUES(@CategoryName, " +
-                                "@Description, @Date)";
-
-                SQLiteCommand insertcom = new SQLiteCommand(query, con);
-
-                //pass values to the querry parameters
-                insertcom.Parameters.AddWithValue("@CategoryName", element.CategoryName);
-                insertcom.Parameters.AddWithValue("@Description", element.Description);
-                insertcom.Parameters.AddWithValue("@Date", element.Date);
-
-
-                try
+                using (var cmd = new SQLiteCommand(con))
                 {
-                    rows = insertcom.ExecuteNonQuery();
-                    //let get the rowid inserted
-                    insertcom.CommandText = " select last_insert_rowid()";
-                    Int64 LastRowID64 = Convert.ToInt64(insertcom.ExecuteScalar());
-                    //grab the bottom 32-bits as the unique id of the row
-                    newId = Convert.ToInt32(LastRowID64);
-                }
-                catch (SQLiteException e)
-                {
-                    Console.WriteLine("error generated. Details: " + e.ToString());
+                    cmd.CommandText = "INSERT INTO PersonalInfo (Name, Email, Phone) VALUES (NULL, NULL, NULL)";
+                    cmd.ExecuteNonQuery();
                 }
             }
-            return newId;
         }
 
-        public Element GetElement(int id)
+        private void CreateContactInfoTable()
         {
-            Element element = new Element();
-
-            using (SQLiteConnection con = new SQLiteConnection(conString))
+            using (var con = new SQLiteConnection(conString))
             {
                 con.Open();
-                SQLiteCommand getcom = new SQLiteCommand("Select * from Persons " +
-                    "WHERE Id= @Id", con);
-                getcom.Parameters.AddWithValue("@Id", id);
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = @"
+                CREATE TABLE IF NOT EXISTS ContactInfo (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                Description TEXT, 
+                Telephone TEXT, 
+                Address TEXT
+                )";
+                cmd.ExecuteNonQuery();
+            }
+        }
 
-                using (SQLiteDataReader reader = getcom.ExecuteReader())
+        private void CreateEducationTable()
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = @"
+                CREATE TABLE IF NOT EXISTS Education (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                Certification TEXT, 
+                SchoolName TEXT, 
+                YearGraduated INTEGER
+                )";
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void CreateReferenceTable()
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = @"
+                CREATE TABLE IF NOT EXISTS Reference (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                Name TEXT, 
+                Description TEXT, 
+                ContactInfo TEXT
+                )";
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        private void CreateWorkExperienceTable()
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = @"
+                CREATE TABLE IF NOT EXISTS WorkExperience (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                CompanyName TEXT, 
+                Role TEXT, 
+                YearsWorked INTEGER
+                )";
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        public int AddPersonalInfo(PersonalInfo personalInfo)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "INSERT INTO PersonalInfo (Name, Email, PhoneNumber) VALUES (@Name, @Email, @PhoneNumber)";
+                cmd.Parameters.AddWithValue("@Name", personalInfo.Name);
+                cmd.Parameters.AddWithValue("@Email", personalInfo.Email);
+                cmd.Parameters.AddWithValue("@PhoneNumber", personalInfo.Phone);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT last_insert_rowid()";
+                return (int)(long)cmd.ExecuteScalar();
+            }
+        }
+
+        public int AddContactInfo(ContactInfo contactInfo)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "INSERT INTO ContactInfo (Description, Telephone, Address) VALUES (@Description, @Telephone, @Address)";
+                cmd.Parameters.AddWithValue("@Description", contactInfo.Description);
+                cmd.Parameters.AddWithValue("@Telephone", contactInfo.Telephone);
+                cmd.Parameters.AddWithValue("@Address", contactInfo.Address);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT last_insert_rowid()";
+                return (int)(long)cmd.ExecuteScalar();
+            }
+        }
+
+        public int AddEducation(Education education)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "INSERT INTO Education (Certification, SchoolName, YearGraduated) VALUES (@Certification, @SchoolName, @YearGraduated)";
+                cmd.Parameters.AddWithValue("@Certification", education.Certification);
+                cmd.Parameters.AddWithValue("@SchoolName", education.SchoolName);
+                cmd.Parameters.AddWithValue("@YearGraduated", education.YearGraduated);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT last_insert_rowid()";
+                return (int)(long)cmd.ExecuteScalar();
+            }
+        }
+
+        public int AddReference(Reference reference)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "INSERT INTO Reference (Name, Description, ContactInfo) VALUES (@Name, @Description, @ContactInfo)";
+                cmd.Parameters.AddWithValue("@Name", reference.Name);
+                cmd.Parameters.AddWithValue("@Description", reference.Description);
+                cmd.Parameters.AddWithValue("@ContactInfo", reference.ContactInfo);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT last_insert_rowid()";
+                return (int)(long)cmd.ExecuteScalar();
+            }
+        }
+
+        public int AddWorkExperience(WorkExperience workExperience)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "INSERT INTO WorkExperience (CompanyName, Role, YearsWorked) VALUES (@CompanyName, @Role, @YearsWorked)";
+                cmd.Parameters.AddWithValue("@CompanyName", workExperience.CompanyName);
+                cmd.Parameters.AddWithValue("@Role", workExperience.Role);
+                cmd.Parameters.AddWithValue("@YearsWorked", workExperience.YearsWorked);
+                cmd.ExecuteNonQuery();
+                cmd.CommandText = "SELECT last_insert_rowid()";
+                return (int)(long)cmd.ExecuteScalar();
+            }
+        }
+
+        public bool EditPersonalInfo(PersonalInfo personalInfo)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "UPDATE PersonalInfo SET Name = @Name, Email = @Email, Phone = @Phone WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", personalInfo.Id);
+                cmd.Parameters.AddWithValue("@Name", personalInfo.Name);
+                cmd.Parameters.AddWithValue("@Email", personalInfo.Email);
+                cmd.Parameters.AddWithValue("@Phone", personalInfo.Phone);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool EditContactInfo(ContactInfo contactInfo)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "UPDATE ContactInfo SET Description = @Description, Telephone = @Telephone, Address = @Address WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", contactInfo.Id);
+                cmd.Parameters.AddWithValue("@Description", contactInfo.Description);
+                cmd.Parameters.AddWithValue("@Telephone", contactInfo.Telephone);
+                cmd.Parameters.AddWithValue("@Address", contactInfo.Address);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool EditEducation(Education education)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "UPDATE Education SET Certification = @Certification, SchoolName = @SchoolName, YearGraduated = @YearGraduated WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", education.Id);
+                cmd.Parameters.AddWithValue("@Certification", education.Certification);
+                cmd.Parameters.AddWithValue("@SchoolName", education.SchoolName);
+                cmd.Parameters.AddWithValue("@YearGraduated", education.YearGraduated);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool EditReference(Reference reference)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "UPDATE Reference SET Name = @Name, Description = @Description, ContactInfo = @ContactInfo WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", reference.Id);
+                cmd.Parameters.AddWithValue("@Name", reference.Name);
+                cmd.Parameters.AddWithValue("@Description", reference.Description);
+                cmd.Parameters.AddWithValue("@ContactInfo", reference.ContactInfo);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool EditWorkExperience(WorkExperience workExperience)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "UPDATE WorkExperience SET CompanyName = @CompanyName, Role = @Role, YearsWorked = @YearsWorked WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", workExperience.Id);
+                cmd.Parameters.AddWithValue("@CompanyName", workExperience.CompanyName);
+                cmd.Parameters.AddWithValue("@Role", workExperience.Role);
+                cmd.Parameters.AddWithValue("@YearsWorked", workExperience.YearsWorked);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool DeletePersonalInfo(int id)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "DELETE FROM PersonalInfo WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool DeleteContactInfo(int id)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "DELETE FROM ContactInfo WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool DeleteEducation(int id)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "DELETE FROM Education WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool DeleteReference(int id)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "DELETE FROM Reference WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public bool DeleteWorkExperience(int id)
+        {
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand(con);
+                cmd.CommandText = "DELETE FROM WorkExperience WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                int result = cmd.ExecuteNonQuery();
+                return result > 0;
+            }
+        }
+
+        public List<PersonalInfo> ReadAllPersonalInfo()
+        {
+            var list = new List<PersonalInfo>();
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand("SELECT * FROM PersonalInfo", con);
+                using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        if (Int32.TryParse(reader["Id"].ToString(), out int id2))
+                        list.Add(new PersonalInfo
                         {
-                            element.Id = id2;
-                        }
-                        element.CategoryName = reader["CategoryName"].ToString();
-                        element.Description = reader["Description"].ToString();
-                        element.Date = reader["Date"].ToString();
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                            Email = reader["Email"].ToString(),
+                            Phone = reader["PhoneNumber"].ToString()
+                        });
                     }
                 }
             }
-            return element;
+            return list;
         }
 
-        public int EditElement(Element element)
-
+        public List<ContactInfo> ReadAllContactInfo()
         {
-            int row = 0;
-            using (SQLiteConnection con = new SQLiteConnection(conString))
-            {
-
-                con.Open();
-                string query = "UPDATE ELEMENTS SET CategoryName= @CategoryName, Description= @Description," +
-                    "Date= @Date WHERE Id=@Id";
-
-                SQLiteCommand updatecom = new SQLiteCommand(query, con);
-                updatecom.Parameters.AddWithValue("@Id", element.Id);
-                updatecom.Parameters.AddWithValue("@CategoryName", element.CategoryName);
-                updatecom.Parameters.AddWithValue("@Description", element.Description);
-                updatecom.Parameters.AddWithValue("@Date", element.Description);
-
-
-                try
-                {
-                    row = updatecom.ExecuteNonQuery();
-                }
-                catch (SQLiteException e)
-                {
-                    Console.WriteLine("error generated. Details: " + e.ToString());
-                }
-            }
-            return row;
-        }
-
-        public int DeleteElement(Element element)
-        {
-            int row = 0;
-            using (SQLiteConnection con = new SQLiteConnection(conString))
+            var list = new List<ContactInfo>();
+            using (var con = new SQLiteConnection(conString))
             {
                 con.Open();
-                string query = "DELETE FROM ELEMENTS WHERE id= @Id";
-                SQLiteCommand deletecom = new SQLiteCommand(query, con);
-                deletecom.Parameters.AddWithValue("@Id", element.Id);
-                try
-                {
-                    row = deletecom.ExecuteNonQuery();
-                }
-                catch (SQLiteException e)
-                {
-                    Console.WriteLine("Error geenrated detials:" + e.ToString());
-                }
-                return row;
-            }
-
-        }
-
-        public List<Element> ReadAllElements()
-        {
-            List<Element> listElements = new List<Element>();
-            using (SQLiteConnection con = new SQLiteConnection(conString))
-            {
-                con.Open();
-                SQLiteCommand com = new SQLiteCommand("Select * from ELEMENTS", con);
-                using (SQLiteDataReader reader = com.ExecuteReader())
+                var cmd = new SQLiteCommand("SELECT * FROM ContactInfo", con);
+                using (var reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
                     {
-                        //Create a Person Object
-                        Element element = new Element();
-                        if (Int32.TryParse(reader["Id"].ToString(), out int id))
+                        list.Add(new ContactInfo
                         {
-                            element.Id = id;
-                        }
-                        element.CategoryName = reader["CategoryName"].ToString();
-                        element.Description = reader["Description"].ToString();
-                        element.Date = reader["Date"].ToString();
-
-
-
-                        listElements.Add(element);
-
-
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Description = reader["Description"].ToString(),
+                            Telephone = reader["Telephone"].ToString(),
+                            Address = reader["Address"].ToString()
+                        });
                     }
                 }
             }
-            return listElements;
+            return list;
+        }
+
+        public List<Education> ReadAllEducation()
+        {
+            var list = new List<Education>();
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand("SELECT * FROM Education", con);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Education
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Certification = reader["Certification"].ToString(),
+                            SchoolName = reader["SchoolName"].ToString(),
+                            YearGraduated = Convert.ToInt32(reader["YearGraduated"])
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<Reference> ReadAllReferences()
+        {
+            var list = new List<Reference>();
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand("SELECT * FROM Reference", con);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new Reference
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            Name = reader["Name"].ToString(),
+                            Description = reader["Description"].ToString(),
+                            ContactInfo = reader["ContactInfo"].ToString()
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public List<WorkExperience> ReadAllWorkExperiences()
+        {
+            var list = new List<WorkExperience>();
+            using (var con = new SQLiteConnection(conString))
+            {
+                con.Open();
+                var cmd = new SQLiteCommand("SELECT * FROM WorkExperience", con);
+                using (var reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        list.Add(new WorkExperience
+                        {
+                            Id = Convert.ToInt32(reader["Id"]),
+                            CompanyName = reader["CompanyName"].ToString(),
+                            Role = reader["Role"].ToString(),
+                            YearsWorked = Convert.ToInt32(reader["YearsWorked"])
+                        });
+                    }
+                }
+            }
+            return list;
         }
     }
 }

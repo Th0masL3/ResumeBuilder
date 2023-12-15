@@ -11,6 +11,6 @@ namespace ResumeBuilder.Models
         public int Id { get; set; }
         public string Description { get; set; }
         public string Telephone { get; set; }
-        public string Adress { get; set; }
+        public string Address { get; set; }
     }
 }
