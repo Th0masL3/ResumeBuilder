@@ -23,7 +23,6 @@ namespace ResumeBuilder
     /// </summary>
     public partial class MainWindow : Window
     {
-
         DatabaseHandler db = DatabaseHandler.Instance;
         List<PersonalInfo> personalInfos;
         public MainWindow()

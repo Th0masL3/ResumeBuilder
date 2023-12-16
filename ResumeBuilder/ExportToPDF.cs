@@ -3,10 +3,6 @@ using PdfSharp.Drawing.Layout;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ResumeBuilder
 {
@@ -25,9 +21,13 @@ namespace ResumeBuilder
             // Get XGraphics
             XGraphics gfx = XGraphics.FromPdfPage(page);
 
-            // Create fonts
-            XFont fontTitle = new XFont("Verdana", 22);
-            XFont fontBody = new XFont("Times New Roman", 12);
+           // Create fonts 
+           // XFont fontTitle = new XFont("Verdana", 22, XFontStyle.BoldItalic);
+           // XFont fontBody = new XFont("Times New Roman", 12, XFontStyle.Regular);
+
+
+            //We had a problem with the package so the fonts didn't where. Therefore, there's nothing displayed in the pdf file
+
 
             // Create XTextFormatter
             XTextFormatter tf = new XTextFormatter(gfx);
@@ -35,7 +35,7 @@ namespace ResumeBuilder
             // Title
             XRect rect = new XRect(0, 10, page.Width, 40);
             tf.Alignment = XParagraphAlignment.Center;
-            tf.DrawString("Resume", fontTitle, XBrushes.Black, rect);
+           // tf.DrawString("Resume", fontTitle, XBrushes.Black, rect);
 
             // Fetch data from database
             var personalInfos = dbHandler.ReadAllPersonalInfo();
@@ -55,12 +55,11 @@ namespace ResumeBuilder
             {
                 text += $"Description: {info.Description}, Telephone: {info.Telephone}, Address: {info.Address}\n";
             }
-            // Add sections for Education, Reference, and WorkExperience in a similar way
 
             // Write data to PDF
             rect = new XRect(10, 60, page.Width - 20, page.Height - 70);
             tf.Alignment = XParagraphAlignment.Left;
-            tf.DrawString(text, fontBody, XBrushes.Black, rect);
+            //tf.DrawString(text, fontBody, XBrushes.Black, rect);
 
             // Save the document
             SaveFileDialog saveFileDialog = new SaveFileDialog();
@@ -78,3 +77,5 @@ namespace ResumeBuilder
 }
     
     
+
+   
